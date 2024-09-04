@@ -1,4 +1,6 @@
 ﻿using System;
+using EventsVendor.Models;
+
 namespace EventsVendor.Interfaces
 {
 	public interface IWalletService
@@ -8,6 +10,8 @@ namespace EventsVendor.Interfaces
         Task<bool> FundWalletAsync(int userId, decimal amount);
 
         Task<bool> DebitWalletAsync(int userId, decimal amount);
+
+        Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(int userId);
     }
 }
 

@@ -31,7 +31,7 @@ namespace EventsVendor.Services
                 .Include(t => t.Event)
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
-
+                
             return ticket;
         }
 

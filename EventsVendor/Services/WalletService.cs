@@ -1,6 +1,7 @@
 ﻿using System;
 using EventsVendor.Interfaces;
 using EventsVendor.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventsVendor.Services
 {
@@ -67,6 +68,14 @@ namespace EventsVendor.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(int userId)
+        {
+            return await _context.WalletTransactions
+                .Where(wt => wt.UserId == userId)
+                .OrderByDescending(wt => wt.TransactionDate) // Most recent transactions first
+                .ToListAsync();
         }
     }
 }

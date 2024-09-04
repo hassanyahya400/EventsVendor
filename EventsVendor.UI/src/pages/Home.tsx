@@ -4,14 +4,14 @@ import Hero from "../components/Hero";
 
 interface Props {}
 
-const EventsListing = () => {
+const Home = () => {
   return (
     <div>
       <Hero />
-      <EventsListGrid />
+      <EventsListGrid limit={8} />
       <Footer />
     </div>
   );
 };
 
-export default EventsListing;
+export default Home;

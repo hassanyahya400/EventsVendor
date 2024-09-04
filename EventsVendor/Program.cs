@@ -13,6 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Configure the MySQL DbContext with connection string
+var eventsVendorDbConnectionString = Environment.GetEnvironmentVariable("EventsVendorDbConnectionString");
+
 builder.Services.AddDbContext<EventsVendorDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("EventsVendorDbConnectionString"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("EventsVendorDbConnectionString"))));

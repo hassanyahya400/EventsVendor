@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EventsVendor.Interfaces;
+using EventsVendor.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -47,6 +48,17 @@ namespace EventsVendor.Controllers
                 return BadRequest("Unable to debit wallet. User not found, invalid amount, or insufficient balance.");
             }
             return NoContent();
+        }
+
+        [HttpGet("transactions/{userId}")]
+        public async Task<ActionResult<IEnumerable<WalletTransaction>>> GetWalletTransactionHistory(int userId)
+        {
+            var transactions = await _walletService.GetWalletTransactionHistoryAsync(userId);
+            if (transactions == null || !transactions.Any())
+            {
+                return NotFound("No transactions found for this user.");
+            }
+            return Ok(transactions);
         }
     }
 }
