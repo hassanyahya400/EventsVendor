@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventsVendor.Interfaces;
 using EventsVendor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,6 +40,7 @@ namespace EventsVendor.Controllers
             return Ok(@event);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Event>> CreateEvent(Event @event)
         {
@@ -46,6 +48,7 @@ namespace EventsVendor.Controllers
             return CreatedAtAction(nameof(GetEvent), new { id = createdEvent.Id }, createdEvent);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateEvent(int id, Event @event)
         {
@@ -57,6 +60,7 @@ namespace EventsVendor.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {

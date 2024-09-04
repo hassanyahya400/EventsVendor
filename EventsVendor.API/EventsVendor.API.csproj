@@ -30,6 +30,7 @@
     <None Remove="Services\" />
     <None Remove="DTOs\Ticket\" />
     <None Remove="DTOs\EventsVendorUser\" />
+    <None Remove="DTOs\Wallet\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -38,5 +39,6 @@
     <Folder Include="Services\" />
     <Folder Include="DTOs\Ticket\" />
     <Folder Include="DTOs\EventsVendorUser\" />
+    <Folder Include="DTOs\Wallet\" />
   </ItemGroup>
 </Project>

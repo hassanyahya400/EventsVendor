@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using EventsVendor.API.DTOs.Wallet;
 using EventsVendor.Interfaces;
 using EventsVendor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EventsVendor.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class WalletController : Controller
     {
         private readonly IWalletService _walletService;
@@ -21,38 +23,51 @@ namespace EventsVendor.Controllers
             _walletService = walletService;
         }
 
-        [HttpGet("balance/{userId}")]
-        public async Task<ActionResult<decimal>> GetWalletBalance(string userId)
+        [HttpGet("balance")]
+        public async Task<ActionResult<decimal>> GetWalletBalance()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var balance = await _walletService.GetWalletBalanceAsync(userId);
             return Ok(balance);
         }
 
-        [HttpPost("fund")]
-        public async Task<IActionResult> FundWallet(string userId, decimal amount)
+        [HttpPost("transactions")]
+        public async Task<IActionResult> FundWallet(WalletTransactionDto transactionDto)
         {
-            var success = await _walletService.FundWalletAsync(userId, amount);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var success = false;
+
+            switch (transactionDto.Type)
+            {
+                case TransactionType.Fund:
+                    success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
+                    break;
+
+                case TransactionType.Debit:
+                    success = await _walletService.DebitWalletAsync(userId, transactionDto.Amount);
+                    break;
+
+                case TransactionType.Credit:
+
+                    success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException("Unknow uperation passed");
+            }
+
             if (!success)
             {
-                return BadRequest("Unable to fund wallet. User not found or invalid amount.");
+                return BadRequest("Unable to fund wallet. User not found, invalid transaction type or invalid amount.");
             }
+
             return NoContent();
         }
 
-        [HttpPost("debit")]
-        public async Task<IActionResult> DebitWallet(string userId, decimal amount)
+        [HttpGet("transactions")]
+        public async Task<ActionResult<IEnumerable<WalletTransaction>>> GetWalletTransactionHistory()
         {
-            var success = await _walletService.DebitWalletAsync(userId, amount);
-            if (!success)
-            {
-                return BadRequest("Unable to debit wallet. User not found, invalid amount, or insufficient balance.");
-            }
-            return NoContent();
-        }
-
-        [HttpGet("transactions/{userId}")]
-        public async Task<ActionResult<IEnumerable<WalletTransaction>>> GetWalletTransactionHistory(string userId)
-        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var transactions = await _walletService.GetWalletTransactionHistoryAsync(userId);
             if (transactions == null || !transactions.Any())
             {

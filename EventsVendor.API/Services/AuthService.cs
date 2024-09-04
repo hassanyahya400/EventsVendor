@@ -37,7 +37,7 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto> LoginAsync(LoginUserDto loginDetails)
     {
-        var user = await _userManager.FindByNameAsync(loginDetails.Username);
+        var user = await _userManager.FindByNameAsync(loginDetails.Email);
         if (user == null || !await _userManager.CheckPasswordAsync(user, loginDetails.Password))
         {
             return null; // Invalid credentials

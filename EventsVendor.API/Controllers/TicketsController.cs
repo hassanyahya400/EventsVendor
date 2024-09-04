@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EventsVendor.Interfaces;
 using EventsVendor.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +14,7 @@ namespace EventsVendor.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TicketsController : Controller
     {
         private readonly ITicketService _ticketService;
@@ -22,8 +25,10 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetUserTickets(string userId)
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetUserTickets()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var tickets = await _ticketService.GetTicketsByUserIdAsync(userId);
             if (tickets == null || !tickets.Any())
             {
@@ -33,8 +38,9 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(int id, string userId)
+        public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var ticket = await _ticketService.GetTicketByIdAsync(id, userId);
             if (ticket == null)
             {
@@ -44,8 +50,9 @@ namespace EventsVendor.Controllers
         }
 
         [HttpPost("book")]
-        public async Task<ActionResult<Ticket>> BookTicket(int eventId, string userId)
+        public async Task<ActionResult<Ticket>> BookTicket(int eventId)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var ticket = await _ticketService.BookTicketAsync(eventId, userId);
             if (ticket == null)
             {
@@ -55,8 +62,9 @@ namespace EventsVendor.Controllers
         }
 
         [HttpPost("cancel/{id}")]
-        public async Task<IActionResult> CancelTicket(int id, string userId)
+        public async Task<IActionResult> CancelTicket(int id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var success = await _ticketService.CancelTicketAsync(id, userId);
             if (!success)
             {
