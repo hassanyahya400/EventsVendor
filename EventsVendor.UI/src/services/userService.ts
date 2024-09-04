@@ -1,24 +1,28 @@
-import { UserSignInRequest } from "../models/requests/signInRequest";
-import { UserSignUpRequest } from "../models/requests/signUpRequest";
-import { UserToken } from "../models/responses/userToken";
+import {
+  AuthTokenResponse,
+  UserLoginRequest,
+  UserRegisterRequest,
+} from "../models/User";
 import { IRestService } from "./restService";
 
 export interface IUserService {
-  signIn(requestBody: UserSignInRequest): Promise<UserToken | null>;
-  signUp(requestBody: UserSignUpRequest): Promise<void | null>;
+  signIn(requestBody: UserLoginRequest): Promise<AuthTokenResponse | null>;
+  signUp(requestBody: UserRegisterRequest): Promise<void | null>;
   sigOut(): void;
 }
 
 export class UserService implements IUserService {
   constructor(private readonly restService: IRestService) {}
 
-  async signIn(requestBody: UserSignInRequest): Promise<UserToken | null> {
+  async signIn(
+    requestBody: UserLoginRequest,
+  ): Promise<AuthTokenResponse | null> {
     try {
-      const url = "/login";
+      const url = "/auth/login";
 
       const tokenResponse = await this.restService.post<
-        UserSignInRequest,
-        UserToken
+        UserLoginRequest,
+        AuthTokenResponse
       >(url, requestBody);
       if (tokenResponse) {
         return tokenResponse;
@@ -31,11 +35,11 @@ export class UserService implements IUserService {
     return null;
   }
 
-  async signUp(requestBody: UserSignUpRequest): Promise<void | null> {
+  async signUp(requestBody: UserRegisterRequest): Promise<void | null> {
     try {
-      const url = "/register";
+      const url = "/auth/register";
 
-      return await this.restService.post<UserSignUpRequest, void>(
+      return await this.restService.post<UserRegisterRequest, void>(
         url,
         requestBody,
       );

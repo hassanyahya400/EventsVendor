@@ -5,13 +5,13 @@ namespace EventsVendor.Interfaces
 {
 	public interface IWalletService
 	{
-        Task<decimal> GetWalletBalanceAsync(int userId);
+        Task<decimal> GetWalletBalanceAsync(string userId);
 
-        Task<bool> FundWalletAsync(int userId, decimal amount);
+        Task<bool> FundWalletAsync(string userId, decimal amount);
 
-        Task<bool> DebitWalletAsync(int userId, decimal amount);
+        Task<bool> DebitWalletAsync(string userId, decimal amount);
 
-        Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(int userId);
+        Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(string userId);
     }
 }
 

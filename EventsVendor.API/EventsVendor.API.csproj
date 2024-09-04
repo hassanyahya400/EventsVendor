@@ -17,6 +17,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.20" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.0.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +29,7 @@
     <None Remove="DTOs\" />
     <None Remove="Services\" />
     <None Remove="DTOs\Ticket\" />
+    <None Remove="DTOs\EventsVendorUser\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -32,5 +37,6 @@
     <Folder Include="DTOs\" />
     <Folder Include="Services\" />
     <Folder Include="DTOs\Ticket\" />
+    <Folder Include="DTOs\EventsVendorUser\" />
   </ItemGroup>
 </Project>

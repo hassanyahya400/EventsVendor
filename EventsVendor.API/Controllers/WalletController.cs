@@ -22,14 +22,14 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet("balance/{userId}")]
-        public async Task<ActionResult<decimal>> GetWalletBalance(int userId)
+        public async Task<ActionResult<decimal>> GetWalletBalance(string userId)
         {
             var balance = await _walletService.GetWalletBalanceAsync(userId);
             return Ok(balance);
         }
 
         [HttpPost("fund")]
-        public async Task<IActionResult> FundWallet(int userId, decimal amount)
+        public async Task<IActionResult> FundWallet(string userId, decimal amount)
         {
             var success = await _walletService.FundWalletAsync(userId, amount);
             if (!success)
@@ -40,7 +40,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpPost("debit")]
-        public async Task<IActionResult> DebitWallet(int userId, decimal amount)
+        public async Task<IActionResult> DebitWallet(string userId, decimal amount)
         {
             var success = await _walletService.DebitWalletAsync(userId, amount);
             if (!success)
@@ -51,7 +51,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet("transactions/{userId}")]
-        public async Task<ActionResult<IEnumerable<WalletTransaction>>> GetWalletTransactionHistory(int userId)
+        public async Task<ActionResult<IEnumerable<WalletTransaction>>> GetWalletTransactionHistory(string userId)
         {
             var transactions = await _walletService.GetWalletTransactionHistoryAsync(userId);
             if (transactions == null || !transactions.Any())

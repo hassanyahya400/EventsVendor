@@ -1,21 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace EventsVendor.Models
 {
-    public class User
+    public class EventsVendorUser : IdentityUser
     {
-        public int Id { get; set; }
-
-        [Required]
-        public string? Username { get; set; }
-
-        public string? PasswordHash { get; set; }
-
-        [Required]
-        public string? Email { get; set; }
-
+        
         public decimal WalletBalance { get; set; } // The user's wallet balance
 
         [JsonIgnore]

@@ -14,13 +14,13 @@ namespace EventsVendor.Services
             _context = context;
         }
 
-        public async Task<decimal> GetWalletBalanceAsync(int userId)
+        public async Task<decimal> GetWalletBalanceAsync(string userId)
         {
             var user = await _context.Users.FindAsync(userId);
             return user?.WalletBalance ?? 0;
         }
 
-        public async Task<bool> FundWalletAsync(int userId, decimal amount)
+        public async Task<bool> FundWalletAsync(string userId, decimal amount)
         {
             var user = await _context.Users.FindAsync(userId);
             if (user == null || amount <= 0)
@@ -45,7 +45,7 @@ namespace EventsVendor.Services
             return true;
         }
 
-        public async Task<bool> DebitWalletAsync(int userId, decimal amount)
+        public async Task<bool> DebitWalletAsync(string userId, decimal amount)
         {
             var user = await _context.Users.FindAsync(userId);
             if (user == null || amount <= 0 || user.WalletBalance < amount)
@@ -70,7 +70,7 @@ namespace EventsVendor.Services
             return true;
         }
 
-        public async Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(int userId)
+        public async Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(string userId)
         {
             return await _context.WalletTransactions
                 .Where(wt => wt.UserId == userId)

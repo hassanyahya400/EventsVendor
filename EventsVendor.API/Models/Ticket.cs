@@ -12,10 +12,10 @@ namespace EventsVendor.Models
         [JsonIgnore]
         public Event Event { get; set; }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [JsonIgnore]
-        public User User { get; set; }
+        public EventsVendorUser User { get; set; }
 
         public DateTime BookingDate { get; set; }
 

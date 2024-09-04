@@ -16,7 +16,7 @@ namespace EventsVendor.Services
             _walletService = walletService;
         }
 
-        public async Task<IEnumerable<Ticket>> GetTicketsByUserIdAsync(int userId)
+        public async Task<IEnumerable<Ticket>> GetTicketsByUserIdAsync(string userId)
         {
             return await _context.Tickets
                 .Include(t => t.Event)
@@ -25,7 +25,7 @@ namespace EventsVendor.Services
                 .ToListAsync();
         }
 
-        public async Task<Ticket> GetTicketByIdAsync(int id, int userId)
+        public async Task<Ticket> GetTicketByIdAsync(int id, string userId)
         {
             var ticket = await _context.Tickets
                 .Include(t => t.Event)
@@ -35,7 +35,7 @@ namespace EventsVendor.Services
             return ticket;
         }
 
-        public async Task<Ticket> BookTicketAsync(int eventId, int userId)
+        public async Task<Ticket> BookTicketAsync(int eventId, string userId)
         {
             var eventToBook = await _context.Events.FindAsync(eventId);
             if (eventToBook == null || eventToBook.AvailableTickets <= 0)
@@ -73,7 +73,7 @@ namespace EventsVendor.Services
             return ticket;
         }
 
-        public async Task<bool> CancelTicketAsync(int id, int userId)
+        public async Task<bool> CancelTicketAsync(int id, string userId)
         {
             var ticket = await _context.Tickets
                 .Include(t => t.Event)

@@ -22,7 +22,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ticket>>> GetUserTickets(int userId)
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetUserTickets(string userId)
         {
             var tickets = await _ticketService.GetTicketsByUserIdAsync(userId);
             if (tickets == null || !tickets.Any())
@@ -33,7 +33,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(int id, int userId)
+        public async Task<ActionResult<Ticket>> GetTicket(int id, string userId)
         {
             var ticket = await _ticketService.GetTicketByIdAsync(id, userId);
             if (ticket == null)
@@ -44,7 +44,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpPost("book")]
-        public async Task<ActionResult<Ticket>> BookTicket(int eventId, int userId)
+        public async Task<ActionResult<Ticket>> BookTicket(int eventId, string userId)
         {
             var ticket = await _ticketService.BookTicketAsync(eventId, userId);
             if (ticket == null)
@@ -55,7 +55,7 @@ namespace EventsVendor.Controllers
         }
 
         [HttpPost("cancel/{id}")]
-        public async Task<IActionResult> CancelTicket(int id, int userId)
+        public async Task<IActionResult> CancelTicket(int id, string userId)
         {
             var success = await _ticketService.CancelTicketAsync(id, userId);
             if (!success)
