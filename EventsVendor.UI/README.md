@@ -1,50 +1,44 @@
-# React + TypeScript + Vite
+# Event Management and Ticket Booking UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the Event Management and Ticket Booking UI application! This is a React application set up with Vite for fast development and optimized build performance.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Before you begin, ensure you have met the following requirements:
 
-## Expanding the ESLint configuration
+- **Node.js**: Version 18 or higher. You can download it from [nodejs.org](https://nodejs.org/).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+To get the application up and running on your local machine, follow these steps:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### 1. Clone the Repository
+
+Clone the repository using Git:
+
+```bash
+git clone https://github.com/hassanyahya400/EventsVendor.git
+cd EventsVendor.UI
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+install the project dependencies using npm or yarn:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a .env file in the root of the project directory and add the following environment variable. Make sure to replace http://localhost:5000 with the URL of your backend local server:
+
+```bash
+https://localhost:5001
+```
+
+### 4. Start the Development Server
+
+```bash
+npm run dev
 ```

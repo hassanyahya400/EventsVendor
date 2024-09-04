@@ -8,7 +8,7 @@ export interface IInjectedServices {
 }
 
 export const createServices = (): IInjectedServices => {
-  const webApiRestService = new RestService("https://localhost:7022");
+  const webApiRestService = new RestService(import.meta.env.API_BASE_URL);
 
   const userService = new UserService(webApiRestService);
   return {
