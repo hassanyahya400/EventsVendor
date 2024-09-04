@@ -1,6 +1,6 @@
 # Event Management and Ticket Booking UI
 
-Welcome to the Event Management and Ticket Booking UI application! This is a React application set up with Vite for fast development and optimized build performance.
+Welcome to the Event Management and Ticket Booking UI application! This is a React application set up with Vite for fast development.
 
 ## Prerequisites
 
