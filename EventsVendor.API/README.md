@@ -1,7 +1,4 @@
-﻿Certainly! Here's the complete `README.md` in markdown format:
-
-```markdown
-# EventsVendor API
+﻿# EventsVendor API
 
 ## Overview
 
@@ -23,8 +20,8 @@ EventsVendor is a .NET 7.0-based API that facilitates event management, ticket b
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/EventsVendor.git
-cd EventsVendor
+git clone https://github.com/hassanyahya400/EventsVendor.git
+cd EventsVendor.API
 ```
 
 ### 2. Set Up the Database Connection String
@@ -32,13 +29,13 @@ cd EventsVendor
 1. Open the `appsettings.json` file.
 2. Replace the `"DefaultConnection"` placeholder in the `"ConnectionStrings"` section with your actual database connection string:
 
-   ```json
-   "ConnectionStrings": {
-     "DefaultConnection": "Server=your_server;Database=your_database;User=your_user;Password=your_password;"
-   }
-   ```
+```json
+"ConnectionStrings": {
+    "DefaultConnection": "Server=your_server;Database=your_database;User=your_user;Password=your_password;"
+}
+```
 
-   Alternatively, you can use environment variables or [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) to store your connection string securely.
+Alternatively, you can use environment variables or [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) to store your connection string securely.
 
 ### 3. Run Migrations
 
@@ -111,4 +108,4 @@ Feel free to fork this repository and submit pull requests. For major changes, p
 For any questions or issues, please reach out via the repository's issue tracker.
 ```
 
-This `README.md` provides a comprehensive guide that will help others set up, run, and test the application, while also addressing important considerations like environment variables and database connection strings.
+This `README.md` provides a comprehensive guide that will help others set up, run, and test the application, while also addressing important considerations like environment variables and database connection strings
