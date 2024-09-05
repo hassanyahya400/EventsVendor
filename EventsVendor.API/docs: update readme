@@ -81,15 +81,8 @@ Ensure that you include a valid JWT token in the `Authorization` header for endp
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ## Contribution
 
-Feel free to fork this repository and submit pull requests. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Contact
-
-For any questions or issues, please reach out via the repository's issue tracker.
-```
-
-This `README.md` provides a comprehensive guide that will help others set up, run, and test the application, while also addressing important considerations like environment variables and database connection strings
