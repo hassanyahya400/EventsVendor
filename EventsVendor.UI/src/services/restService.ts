@@ -31,6 +31,7 @@ export class RestService implements IRestService {
 	): Promise<TResponse> {
 		try {
 			const url = this.getUrl(endpoint);
+			console.log(additionalHeaders, "headers here");
 
 			const response = await axios.get<TResponse>(url, {
 				headers: additionalHeaders,

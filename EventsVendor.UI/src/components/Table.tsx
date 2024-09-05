@@ -1,38 +1,62 @@
+import { useMutation } from "@tanstack/react-query";
+import { useInjectedServices } from "../contexts/serviceDependency";
+
 interface Props<T> {
-  columns: (keyof T)[];
-  data: T[];
+	columns: (keyof T)[];
+	data: T[];
+	variant?: string;
 }
 
-const Table = <T,>({ columns, data }: Props<T>) => {
-  return (
-    <div className="mt-8 shadow-sm border rounded-lg overflow-x-auto">
-      <table className="w-full table-auto text-sm text-left">
-        <thead className="bg-gray-50 text-gray-600 font-medium border-b">
-          <tr>
-            {columns.map((column) => (
-              <th key={String(column)} className="py-3 px-6">
-                {String(column)}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="text-gray-600 divide-y">
-          {data.map((row, idx) => (
-            <tr key={idx}>
-              {columns.map((column) => (
-                <td
-                  key={String(column)}
-                  className="px-6 py-4 whitespace-nowrap"
-                >
-                  {String(row[column])}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+const Table = <T,>({ columns, data, variant }: Props<T>) => {
+	const { ticketService } = useInjectedServices();
+
+	const cancelTicket = useMutation({
+		mutationFn: async (id: number) => await ticketService.cancelTicket(id),
+		onSuccess: (data) => {
+			console.log("Ticket booked successfully", data);
+		},
+		onError: (error) => {
+			console.error("Error booking ticket", error);
+		},
+	});
+	return (
+		<div className="mt-8 shadow-sm border rounded-lg overflow-x-auto">
+			<table className="w-full table-auto text-sm text-left">
+				<thead className="bg-gray-50 text-gray-600 font-medium border-b">
+					<tr>
+						{columns.map((column) => (
+							<th key={String(column)} className="py-3 px-6">
+								{String(column)}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody className="text-gray-600 divide-y">
+					{data.map((row, idx) => (
+						<tr key={idx}>
+							{columns.map((column) => (
+								<td key={String(column)} className="px-6 py-4 whitespace-nowrap">
+									{String(row[column])}
+								</td>
+							))}
+							{variant == "ticket" ? (
+								<td className="text-right px-6 whitespace-nowrap">
+									<button
+										onClick={() => cancelTicket.mutate(Number(row[columns[0]]))}
+										className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
+									>
+										Cancel
+									</button>
+								</td>
+							) : (
+								""
+							)}
+						</tr>
+					))}
+				</tbody>
+			</table>
+		</div>
+	);
 };
 
 export default Table;

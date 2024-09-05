@@ -1,35 +1,45 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import * as yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
 import BrandLogo from "../components/BrandLogo";
 import Button from "../components/Button";
 import CustomInput from "../components/CustomInput";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { UserLoginRequest } from "../models/User";
-
-const loginSchema = yup.object().shape({
-	email: yup.string().email("Invalid email format").required("Email is required"),
-	password: yup
-		.string()
-		.min(6, "Password must be at least 6 characters")
-		.required("Password is required"),
-});
+import { loginSchema } from "./_inputValidations";
+import { useUserStore } from "../state-management/userStore";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
+	const { setUser } = useUserStore();
 	const { userService } = useInjectedServices();
+	const navigate = useNavigate();
 
 	const {
-		control,
 		handleSubmit,
-		getValues,
-		formState: { errors },
+		register,
+		formState: { errors, isSubmitting },
 	} = useForm({
 		resolver: yupResolver(loginSchema),
 	});
 
-	const onSubmit = async (data: UserLoginRequest) => {
-		await userService.signIn(data);
+	const onLogin = async (data: UserLoginRequest) => {
+		const user = {
+			email: data.email,
+			id: "",
+			token: "",
+		};
+		const response = await userService.login(data);
+		if (response?.token) {
+			const decodedToken = (await jwtDecode(response.token)) as any;
+			user.id = decodedToken.nameidentifier;
+			user.token = response.token;			
+			setUser(user);
+			navigate("/");
+			return;
+		} else {
+			console.log("An error occured while logging in");
+		}
 	};
 	return (
 		<main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -40,9 +50,21 @@ const Login = () => {
 						<h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Log in to your account</h3>
 					</div>
 				</div>
-				<form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-					<CustomInput type="email" name="Email" />
-					<CustomInput type="password" name="Password" />
+				<form onSubmit={handleSubmit(onLogin)} className="space-y-5">
+					<CustomInput
+						type="email"
+						name="email"
+						error={errors.email}
+						placeholder="email"
+						register={register}
+					/>
+					<CustomInput
+						type="password"
+						name="password"
+						error={errors.password}
+						placeholder="password"
+						register={register}
+					/>
 					<div className="flex items-center justify-between text-sm">
 						<div className="flex items-center gap-x-3">
 							<input
@@ -57,7 +79,7 @@ const Login = () => {
 							<span>Remember me</span>
 						</div>
 					</div>
-					<Button text="Sign in" />
+					<Button text="Sign in" type="submit" isLoading={isSubmitting} />
 				</form>
 
 				<p className="text-center">

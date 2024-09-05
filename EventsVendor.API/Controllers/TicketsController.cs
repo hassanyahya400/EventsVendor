@@ -64,7 +64,7 @@ namespace EventsVendor.Controllers
             return CreatedAtAction(nameof(GetTicket), new { id = ticket.Id, userId = userId }, ticket);
         }
 
-        [HttpPost("cancel/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> CancelTicket(int id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

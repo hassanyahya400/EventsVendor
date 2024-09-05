@@ -1,39 +1,52 @@
-import { Event } from "../models/Event";
 import { IRestService } from "./restService";
 
+import { BookTicketResponse, Ticket } from "../models/Ticket";
+
 export interface ITicketService {
-  getEvents(): Promise<Event[] | null>;
-  getEvent(id: number | undefined): Promise<Event | null>;
+	getTickets(): Promise<Ticket[]>;
+
+	bookEventTicket(eventId: number | null): Promise<BookTicketResponse | null>;
+
+	cancelTicket(ticketId: number): Promise<void>;
 }
 
 export class TicketService implements ITicketService {
-  constructor(
-    private readonly restService: IRestService,
-    private readonly authorizedRestService: IRestService,
-  ) {}
+	constructor(
+		private readonly restService: IRestService,
+		private readonly authorizedRestService: IRestService,
+	) {}
 
-  async getEvents(): Promise<Event[] | null> {
-    try {
-      const url = "/events";
-      const eventsResponse = await this.restService.get<Event[] | null>(url);
+	async getTickets(): Promise<Ticket[]> {
+		try {
+			const url = "/tickets";
+			const ticketsResponse = await this.authorizedRestService.get<Ticket[]>(url);
+			return ticketsResponse;
+		} catch (error) {
+			console.error(`Unable to fetch tickets`);
+			throw error;
+		}
+	}
 
-      return eventsResponse;
-    } catch (error) {
-      console.error(`Unable to export CSV: ${error}`);
-    }
-    return null;
-  }
+	async bookEventTicket(eventId: number): Promise<BookTicketResponse | null> {
+		try {
+			const url = `/tickets/book?eventId=${eventId}`;
+			const newTicketResponse = await this.authorizedRestService.post<null, BookTicketResponse>(
+				url,
+				null,
+			);
+			return newTicketResponse;
+		} catch (error) {
+			console.error(`Unable to create a hospital: ${error}`);
+		}
+		return null;
+	}
 
-  async getEvent(id: number): Promise<Event | null> {
-    try {
-      const url = `/events/${id}`;
-
-      const eventResponse = await this.restService.get<Event | null>(url);
-
-      return eventResponse;
-    } catch (error) {
-      console.error(`unable to get hospital: ${error}`);
-    }
-    return null;
-  }
+	async cancelTicket(ticketId: number): Promise<void> {
+		try {
+			const url = `/tickets/${ticketId}`;
+			return await this.authorizedRestService.delete(url);
+		} catch (error) {
+			console.error(`Unable to change delete: ${error}`);
+		}
+	}
 }

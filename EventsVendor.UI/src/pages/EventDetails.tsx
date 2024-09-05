@@ -1,18 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { TbClock } from "react-icons/tb";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { extractIdFromPath } from "../helpers/urlHelpers";
+import { BounceLoader } from "react-spinners";
+import Button from "../components/Button";
 
 const EventDetails = () => {
 	const location = useLocation();
+	const navigate = useNavigate();
 	const id = extractIdFromPath(location.pathname);
 
 	if (id == null) return <div>Event not found</div>;
 
-	const { eventService } = useInjectedServices();
+	const { eventService, ticketService } = useInjectedServices();
 	const {
 		data: event,
 		isLoading,
@@ -25,7 +28,21 @@ const EventDetails = () => {
 		staleTime: 60 * 60 * 24,
 	});
 
-	if (isLoading) return <div>Loading...</div>;
+	const { mutate: bookTicket, isPending } = useMutation({
+		mutationFn: async (id: number) => await ticketService.bookEventTicket(id),
+		onSuccess: (data) => {
+			navigate("/events/tickets");
+			alert(`Ticket booked successfully for event ${data?.eventId}`);
+			console.log("Ticket booked successfully", data);
+		},
+		onError: (error) => {
+			// Handle errors, e.g., show an error message
+			alert(`Error booking ticket ${error.message}`);
+			console.error("Error booking ticket", error);
+		},
+	});
+
+	if (isLoading) return <BounceLoader loading={true} size={25} />;
 
 	if (error) return <div>Error: {error.message}</div>;
 
@@ -62,15 +79,12 @@ const EventDetails = () => {
 						</div>
 					</div>
 				</div>
-				<div className="flex flex-col gap-2">
-					<div>Share event</div>
-					<p>Price: ${event.price}</p>
-					<a
-						href="javascript:void(0)"
-						className=" max-w-36 py-2 px-5 rounded-lg font-medium text-white text-center bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150 block md:py-3 md:inline"
-					>
-						Book ticket
-					</a>
+				<div className="flex flex-col gap-2 max-w-md items-start">
+					{/* <div>Share event</div> */}
+					<p className="font-medium">
+						Price: <span className="text-3xl">₦ {event.price}</span>
+					</p>
+					<Button text="Book ticket" onClick={() => bookTicket(id)} isLoading={isPending} />
 				</div>
 			</div>
 		</div>
