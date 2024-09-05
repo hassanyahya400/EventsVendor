@@ -109,6 +109,7 @@ namespace EventsVendor.Services
 
         public async Task<IEnumerable<WalletTransaction>> GetWalletTransactionHistoryAsync(string userId)
         {
+            Console.WriteLine(userId);
             return await _context.WalletTransactions
                 .Where(wt => wt.UserId == userId)
                 .OrderByDescending(wt => wt.TransactionDate) // Most recent transactions first
