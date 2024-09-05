@@ -30,16 +30,19 @@ namespace EventsVendor.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var tickets = await _ticketService.GetTicketsByUserIdAsync(userId);
+            
             if (tickets == null || !tickets.Any())
             {
                 return NotFound("User not found or ticket does not exist for this user.");
             }
+
             return Ok(tickets);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Ticket>> GetTicket(int id)
         {
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var ticket = await _ticketService.GetTicketByIdAsync(id, userId);
             if (ticket == null)

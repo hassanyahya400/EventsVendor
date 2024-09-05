@@ -7,7 +7,7 @@ const events = [
     description: "An outdoor concert featuring local bands.",
     location: "Central Park, NY",
     date: "2024-09-15",
-    availableTicket: 100,
+    availableTickets: 100,
     price: 50.0,
   },
   {
@@ -18,7 +18,7 @@ const events = [
     description: "A grand opening of a modern art gallery.",
     location: "Downtown LA, CA",
     date: "2024-09-20",
-    availableTicket: 50,
+    availableTickets: 50,
     price: 25.0,
   },
   {
@@ -29,7 +29,7 @@ const events = [
     description: "A festival showcasing diverse culinary experiences.",
     location: "San Francisco, CA",
     date: "2024-10-05",
-    availableTicket: 200,
+    availableTickets: 200,
     price: 30.0,
   },
   {
@@ -40,7 +40,7 @@ const events = [
     description: "Annual conference featuring the latest in technology.",
     location: "Silicon Valley, CA",
     date: "2024-10-10",
-    availableTicket: 300,
+    availableTickets: 300,
     price: 150.0,
   },
   {
@@ -51,7 +51,7 @@ const events = [
     description: "An evening of smooth jazz music.",
     location: "New Orleans, LA",
     date: "2024-09-25",
-    availableTicket: 75,
+    availableTickets: 75,
     price: 40.0,
   },
   {
@@ -62,7 +62,7 @@ const events = [
     description: "Exclusive screening of an independent film.",
     location: "Austin, TX",
     date: "2024-10-18",
-    availableTicket: 120,
+    availableTickets: 120,
     price: 20.0,
   },
   {
@@ -73,7 +73,7 @@ const events = [
     description: "Guided hike through the scenic mountains.",
     location: "Boulder, CO",
     date: "2024-09-30",
-    availableTicket: 30,
+    availableTickets: 30,
     price: 60.0,
   },
   {
@@ -84,7 +84,7 @@ const events = [
     description: "A weekend retreat focused on mindfulness and yoga.",
     location: "Sedona, AZ",
     date: "2024-10-12",
-    availableTicket: 25,
+    availableTickets: 25,
     price: 200.0,
   },
   {
@@ -95,7 +95,7 @@ const events = [
     description: "Hands-on cooking class with a professional chef.",
     location: "Chicago, IL",
     date: "2024-09-28",
-    availableTicket: 15,
+    availableTickets: 15,
     price: 80.0,
   },
   {
@@ -106,7 +106,7 @@ const events = [
     description: "Annual book fair featuring local and international authors.",
     location: "Boston, MA",
     date: "2024-10-01",
-    availableTicket: 500,
+    availableTickets: 500,
     price: 10.0,
   },
   {
@@ -117,7 +117,7 @@ const events = [
     description: "5K charity run for a good cause.",
     location: "Miami, FL",
     date: "2024-09-22",
-    availableTicket: 400,
+    availableTickets: 400,
     price: 35.0,
   },
   {
@@ -128,7 +128,7 @@ const events = [
     description: "A live performance of a classic play.",
     location: "Seattle, WA",
     date: "2024-10-07",
-    availableTicket: 60,
+    availableTickets: 60,
     price: 70.0,
   },
 ];

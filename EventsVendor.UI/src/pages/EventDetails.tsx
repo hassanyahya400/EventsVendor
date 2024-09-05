@@ -35,7 +35,7 @@ const EventDetails = () => {
 	return (
 		<div className="my-4">
 			<img src={event.imageUrl} />
-			<div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-y-10 content-between my-3">
+			<div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10 content-between my-3">
 				<div>
 					<div>
 						<h3 className="text-lg text-gray-800 duration-150 group-hover:text-indigo-600 font-semibold pb-3">

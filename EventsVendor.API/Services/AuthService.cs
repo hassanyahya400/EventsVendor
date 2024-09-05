@@ -51,12 +51,13 @@ public class AuthService : IAuthService
 
     private string GenerateJwtToken(EventsVendorUser user, IList<string> roles)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+            new Claim(ClaimTypes.NameIdentifier, user.Id), 
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.NameIdentifier, user.Id)
-        }.Union(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+            new Claim(ClaimTypes.Email, user.Email)
+        };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
