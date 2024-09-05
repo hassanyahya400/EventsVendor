@@ -68,29 +68,13 @@ Use Postman or cURL to interact with the API. Some example endpoints:
 
 - **Register a User**: `POST /api/auth/register`
 - **Login a User**: `POST /api/auth/login`
-- **Create an Event (Admin only)**: `POST /api/events`
+- **Create an Event**: `POST /api/events`
 - **Book a Ticket**: `POST /api/tickets/book`
 - **Fund Wallet**: `POST /api/wallet/fund`
 
 Ensure that you include a valid JWT token in the `Authorization` header for endpoints that require authentication.
 
-### 7. Environment Variables
-
-For sensitive information like the JWT secret key and connection string, it's recommended to use environment variables:
-
-```bash
-setx JWT_KEY "your_super_secret_key"
-setx DefaultConnection "your_connection_string"
-```
-
-Update the `Program.cs` to fetch these values from environment variables:
-
-```csharp
-var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
-var connectionString = Environment.GetEnvironmentVariable("DefaultConnection");
-```
-
-### 8. Notes
+### 7. Notes
 
 - Ensure the `JWT_KEY` and `DefaultConnection` are securely stored and not hardcoded in the source code.
 - Modify the `JwtSettings` in `appsettings.json` if you need to adjust the token expiration or other JWT-related settings.
