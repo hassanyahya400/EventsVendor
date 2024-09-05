@@ -1,4 +1,5 @@
 ﻿using System;
+using EventsVendor.API.DTOs.Wallet;
 using EventsVendor.Interfaces;
 using EventsVendor.Models;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,42 @@ namespace EventsVendor.Services
         {
             var user = await _context.Users.FindAsync(userId);
             return user?.WalletBalance ?? 0;
+        }
+
+        public async Task<bool> ProcessWalletTransactionAsync(string userId, WalletTransactionDto transactionDto)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                return false; // User not found
+            }
+
+            if (transactionDto.Type == TransactionType.Debit)
+            {
+                if (user.WalletBalance < transactionDto.Amount)
+                {
+                    return false; // Insufficient balance for debit
+                }
+                user.WalletBalance -= transactionDto.Amount;
+            }
+            else if (transactionDto.Type == TransactionType.Fund)
+            {
+                user.WalletBalance += transactionDto.Amount;
+            }
+
+            // Create the WalletTransaction record
+            var walletTransaction = new WalletTransaction
+            {
+                UserId = userId,
+                Amount = transactionDto.Amount,
+                TransactionDate = transactionDto.TransactionDate ?? DateTime.Now,
+                Type = transactionDto.Type
+            };
+
+            _context.WalletTransactions.Add(walletTransaction);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> FundWalletAsync(string userId, decimal amount)

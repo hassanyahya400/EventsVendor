@@ -11,6 +11,18 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
+
 // Add Identity
 builder.Services.AddIdentity<EventsVendorUser, IdentityRole>()
     .AddEntityFrameworkStores<EventsVendorDbContext>()
@@ -59,7 +71,7 @@ builder.Services.AddScoped<ITicketService, TicketService>();
 
 var app = builder.Build();
 
-// Ensure roles are created
+// Ensure roles are created 
 using (var scope = app.Services.CreateScope())
 {
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -82,6 +94,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
@@ -89,4 +103,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-

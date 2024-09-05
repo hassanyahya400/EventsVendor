@@ -31,37 +31,53 @@ namespace EventsVendor.Controllers
             return Ok(balance);
         }
 
+        //[HttpPost("transactions")]
+        //public async Task<IActionResult> FundWallet(WalletTransactionDto transactionDto)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var success = false;
+
+        //    switch (transactionDto.Type)
+        //    {
+        //        case TransactionType.Fund:
+        //            success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
+        //            break;
+
+        //        case TransactionType.Debit:
+        //            success = await _walletService.DebitWalletAsync(userId, transactionDto.Amount);
+        //            break;
+
+        //        case TransactionType.Credit:
+
+        //            success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
+        //            break;
+
+        //        default:
+        //            throw new ArgumentOutOfRangeException("Unknow uperation passed");
+        //    }
+
+        //    if (!success)
+        //    {
+        //        return BadRequest("Unable to fund wallet. User not found, invalid transaction type or invalid amount.");
+        //    }
+
+        //    return NoContent();
+        //}
+
         [HttpPost("transactions")]
-        public async Task<IActionResult> FundWallet(WalletTransactionDto transactionDto)
+        public async Task<IActionResult> ProcessTransaction([FromBody] WalletTransactionDto transactionDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var success = false;
 
-            switch (transactionDto.Type)
-            {
-                case TransactionType.Fund:
-                    success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
-                    break;
-
-                case TransactionType.Debit:
-                    success = await _walletService.DebitWalletAsync(userId, transactionDto.Amount);
-                    break;
-
-                case TransactionType.Credit:
-
-                    success = await _walletService.FundWalletAsync(userId, transactionDto.Amount);
-                    break;
-
-                default:
-                    throw new ArgumentOutOfRangeException("Unknow uperation passed");
-            }
+            // Call service to process the transaction
+            var success = await _walletService.ProcessWalletTransactionAsync(userId, transactionDto);
 
             if (!success)
             {
-                return BadRequest("Unable to fund wallet. User not found, invalid transaction type or invalid amount.");
+                return BadRequest("Transaction failed. Either insufficient balance or user not found.");
             }
 
-            return NoContent();
+            return Ok("Transaction successful.");
         }
 
         [HttpGet("transactions")]

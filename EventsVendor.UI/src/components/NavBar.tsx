@@ -68,7 +68,7 @@ const NavBar = () => {
             href="javascript:void(0)"
             className="py-2 px-5 rounded-lg font-medium text-white text-center bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150 block md:py-3 md:inline"
           >
-            Get started
+            Login
           </a>
         </li>
       </ul>
