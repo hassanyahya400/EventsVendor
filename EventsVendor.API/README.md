@@ -1,4 +1,4 @@
-﻿# EventsVendor API
+# EventsVendor API
 
 ## Overview
 
@@ -69,8 +69,11 @@ Use Postman or cURL to interact with the API. Some example endpoints:
 - **Register a User**: `POST /api/auth/register`
 - **Login a User**: `POST /api/auth/login`
 - **Create an Event**: `POST /api/events`
+- **Get an Event**: `GET /api/events/:id`
+- **Get all Events**: `GET /api/events`
 - **Book a Ticket**: `POST /api/tickets/book`
-- **Fund Wallet**: `POST /api/wallet/fund`
+- **Fund Wallet**: `POST /api/wallet/transactions`
+- **View Wallet Transactions**: `GET /api/wallet/transactions`
 
 Ensure that you include a valid JWT token in the `Authorization` header for endpoints that require authentication.
 
@@ -86,3 +89,4 @@ Ensure that you include a valid JWT token in the `Authorization` header for endp
 
 
 ## Contact
+
