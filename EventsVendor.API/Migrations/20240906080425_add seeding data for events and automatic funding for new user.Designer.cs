@@ -3,6 +3,7 @@ using System;
 using EventsVendor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventsVendor.API.Migrations
 {
     [DbContext(typeof(EventsVendorDbContext))]
-    partial class EventsVendorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240906080425_add seeding data for events and automatic funding for new user")]
+    partial class addseedingdataforeventsandautomaticfundingfornewuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

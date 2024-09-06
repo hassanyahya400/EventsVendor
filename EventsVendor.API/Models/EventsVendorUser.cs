@@ -7,8 +7,8 @@ namespace EventsVendor.Models
 {
     public class EventsVendorUser : IdentityUser
     {
-        
-        public decimal WalletBalance { get; set; } // The user's wallet balance
+
+        public decimal WalletBalance { get; set; } = 10000; // The user's wallet balance
 
         [JsonIgnore]
         public ICollection<WalletTransaction>? WalletTransactions { get; set; }

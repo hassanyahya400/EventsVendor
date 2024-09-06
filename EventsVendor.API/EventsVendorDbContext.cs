@@ -5,17 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventsVendor
 {
-	public class EventsVendorDbContext : IdentityDbContext<EventsVendorUser>
-	{
-		public EventsVendorDbContext(DbContextOptions<EventsVendorDbContext> options) : base(options)
-		{
+    public class EventsVendorDbContext : IdentityDbContext<EventsVendorUser>
+    {
+        public EventsVendorDbContext(DbContextOptions<EventsVendorDbContext> options) : base(options)
+        {
         }
 
         public DbSet<Event> Events { get; set; }
 
         public DbSet<Ticket> Tickets { get; set; }
 
-		//public DbSet<EventsVendorUser> EventsVendorUser { get; set; }
+        //public DbSet<EventsVendorUser> EventsVendorUser { get; set; }
 
         public DbSet<WalletTransaction> WalletTransactions { get; set; }
 
@@ -48,12 +48,14 @@ namespace EventsVendor
             //    new EventsVendorUser {Username = "user3", Email = "user3@events.com", WalletBalance = 20.00m }
             //);
 
-            //// Seeding Events
-            //modelBuilder.Entity<Event>().HasData(
-            //    new Event { Id = 1, Name = "Concert", Description = "Asake Live Concert", Location = "Quilox", Date = DateTime.Now.AddMonths(1), AvailableTickets = 100, Price = 50.00m },
-            //    new Event { Id = 2, Name = "Seminar", Description = "Tech Seminar", Location = "Eko Hotel", Date = DateTime.Now.AddMonths(2), AvailableTickets = 50, Price = 20.00m },
-            //    new Event { Id = 3, Name = "Workshop", Description = "Programming Workshop", Location = "O2 Arena", Date = DateTime.Now.AddMonths(3), AvailableTickets = 30, Price = 100.00m }
-            //);
+            // Seeding Events
+            modelBuilder.Entity<Event>().HasData(
+                new Event { Id = 4351, Name = "Concert", Description = "Asake Live Concert", Location = "Quilox", Date = DateTime.Now.AddMonths(1), AvailableTickets = 100, Price = 50, ImageUrl= "https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" },
+                new Event { Id = 2345, Name = "Seminar", Description = "Tech Seminar", Location = "Eko Hotel", Date = DateTime.Now.AddMonths(2), AvailableTickets = 50, Price = 20 },
+                new Event { Id = 8773, Name = "Workshop", Description = "Programming Workshop", Location = "O2 Arena", Date = DateTime.Now.AddMonths(3), AvailableTickets = 30, Price = 100 },
+                new Event { Id = 5670, Name = "Workshop", Description = "Programming Workshop", Location = "Landmark center", Date = DateTime.Now.AddMonths(3), AvailableTickets = 30, Price =100, ImageUrl = "https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" }
+
+            );
 
             //// Seeding Tickets
             //modelBuilder.Entity<Ticket>().HasData(

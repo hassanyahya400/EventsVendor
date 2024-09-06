@@ -33,11 +33,13 @@ const Login = () => {
 		if (response?.token) {
 			const decodedToken = (await jwtDecode(response.token)) as any;
 			user.id = decodedToken.nameidentifier;
-			user.token = response.token;			
+			user.token = response.token;
 			setUser(user);
 			navigate("/");
+			alert("Login successful, click OK to proceed");
 			return;
 		} else {
+			alert("An error occured while logging in, please try again");
 			console.log("An error occured while logging in");
 		}
 	};

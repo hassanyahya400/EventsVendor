@@ -36,8 +36,10 @@ const Register = () => {
 			user.token = response.token;
 			setUser(user);
 			navigate("/");
+			alert("Register successful, click OK to proceed");
 			return;
 		} else {
+			alert("An error occured while submitting, please try again");
 			console.log("An error occured while submitting");
 		}
 	};

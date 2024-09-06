@@ -26,7 +26,7 @@ namespace EventsVendor.Models
 
     public enum TicketStatus
     {
-        Booked,
         Cancelled,
+        Booked,
     }   
 }

@@ -19,8 +19,8 @@ namespace EventsVendor.Models
 
     public enum TransactionType
     {
-        Fund,   // Adding money to the wallet
         Debit,  // Deducting money (booking a ticket)
+        Fund,   // Adding money to the wallet
         Credit  // Refunding money (ticket cancellation)
     }
 }

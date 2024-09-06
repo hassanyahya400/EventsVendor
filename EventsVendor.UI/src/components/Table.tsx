@@ -1,13 +1,24 @@
 import { useMutation } from "@tanstack/react-query";
 import { useInjectedServices } from "../contexts/serviceDependency";
+import { FC } from "react";
 
 interface Props<T> {
 	columns: (keyof T)[];
 	data: T[];
 	variant?: string;
+	rowAction?: RowAction;
+}
+interface RowAction {
+	name: string;
+	columnIdx: string | number;
+	component: FC | any;
 }
 
-const Table = <T,>({ columns, data, variant }: Props<T>) => {
+{
+	/* <rowAction.component /> */
+}
+
+const Table = <T,>({ columns, data, variant, rowAction }: Props<T>) => {
 	const { ticketService } = useInjectedServices();
 
 	const { mutate: cancelTicket } = useMutation({
@@ -61,6 +72,7 @@ const Table = <T,>({ columns, data, variant }: Props<T>) => {
 							) : (
 								""
 							)}
+
 						</tr>
 					))}
 				</tbody>
