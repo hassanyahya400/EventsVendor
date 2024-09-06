@@ -9,10 +9,12 @@ import { UserLoginRequest } from "../models/User";
 import { loginSchema } from "./_inputValidations";
 import { useUserStore } from "../state-management/userStore";
 import { jwtDecode } from "jwt-decode";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const Login = () => {
-	const { setUser } = useUserStore();
 	const { userService } = useInjectedServices();
+	const { setUser, user } = useUserStore();
+	useAuthRedirect(!!user, "/");
 	const navigate = useNavigate();
 
 	const {
@@ -35,7 +37,7 @@ const Login = () => {
 			user.id = decodedToken.nameidentifier;
 			user.token = response.token;
 			setUser(user);
-			navigate("/");
+			navigate("/", { replace: true });
 			alert("Login successful, click OK to proceed");
 			return;
 		} else {

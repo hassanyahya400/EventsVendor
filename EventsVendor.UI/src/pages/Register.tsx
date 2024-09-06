@@ -11,7 +11,7 @@ import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "../state-management/userStore";
 
 const Register = () => {
-	const { setUser } = useUserStore();
+	const { user, setUser } = useUserStore();
 	const { userService } = useInjectedServices();
 	const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const Register = () => {
 			user.id = decodedToken.nameidentifier;
 			user.token = response.token;
 			setUser(user);
-			navigate("/");
+			navigate("/", { replace: true });
 			alert("Register successful, click OK to proceed");
 			return;
 		} else {

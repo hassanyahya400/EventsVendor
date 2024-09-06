@@ -16,12 +16,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll",
         builder =>
         {
-            builder.AllowAnyOrigin()
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 });
-
 
 // Add Identity
 builder.Services.AddIdentity<EventsVendorUser, IdentityRole>()
@@ -56,9 +56,9 @@ builder.Services.AddDbContext<EventsVendorDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("EventsVendorDbConnectionString"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("EventsVendorDbConnectionString"))));
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

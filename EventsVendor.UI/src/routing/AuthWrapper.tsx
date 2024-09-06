@@ -1,17 +1,12 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useUserStore } from "../state-management/userStore";
-import { useEffect } from "react";
+import useAuthRedirect from "../hooks/useAuthRedirect";
 
 const AuthWrapper: React.FC = () => {
 	const { user } = useUserStore();
-	const navigate = useNavigate();
+	const redirectToLogin = !user;
 
-	useEffect(() => {
-		if (!user) {
-			navigate("/login");
-			alert("You need to login to access this route, click ok to login");
-		}
-	}, [user]);
+	useAuthRedirect(redirectToLogin, "/login", "User not logged in, click Ok to login");
 
 	return <Outlet />;
 };
