@@ -1,10 +1,9 @@
 import { ReactNode, createContext, useContext } from "react";
-
-import { IUserService, UserService } from "../services/userService";
-import { RestService } from "../services/restService";
-import { IEventService, EventService } from "../services/eventService";
-import { ITicketService, TicketService } from "../services/ticketService";
 import { AuthorizedRestService } from "../services/authorizedRestService";
+import { EventService, IEventService } from "../services/eventService";
+import { RestService } from "../services/restService";
+import { ITicketService, TicketService } from "../services/ticketService";
+import { IUserService, UserService } from "../services/userService";
 import { IWalletService, WalletService } from "../services/walletService";
 
 export interface IInjectedServices {

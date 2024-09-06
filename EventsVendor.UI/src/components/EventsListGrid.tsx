@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
-import initialEventsData from "../data/events";
-import EventCard from "./EventCard";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { Event } from "../models/Event";
+import EventCard from "./EventCard";
 import PagePreloader from "./PagePreloader";
 
 interface Props {

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { useInjectedServices } from "../contexts/serviceDependency";
 import { FC } from "react";
+import { useInjectedServices } from "../contexts/serviceDependency";
 
 interface Props<T> {
 	columns: (keyof T)[];

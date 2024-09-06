@@ -1,10 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { FC } from "react";
+import PagePreloader from "../components/PagePreloader";
 import Table from "../components/Table";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { Ticket } from "../models/Ticket";
-import { BounceLoader } from "react-spinners";
-import { FC } from "react";
-import PagePreloader from "../components/PagePreloader";
 
 // import tickets from "../data/tickets";
 

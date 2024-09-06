@@ -4,10 +4,10 @@ import { MdDateRange } from "react-icons/md";
 import { TbClock } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import ExpandableText from "../components/ExpandableText";
 import PagePreloader from "../components/PagePreloader";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { extractIdFromPath } from "../helpers/urlHelpers";
-import ExpandableText from "../components/ExpandableText";
 
 const EventDetails = () => {
 	const location = useLocation();

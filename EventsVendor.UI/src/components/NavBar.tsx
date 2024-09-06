@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import navigation from "../data/navigationLinks";
-import BrandLogo from "./BrandLogo";
 import { useUserStore } from "../state-management/userStore";
+import BrandLogo from "./BrandLogo";
 
 const NavBar = () => {
 	const [state, setState] = useState(true);

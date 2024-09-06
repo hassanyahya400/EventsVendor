@@ -1,9 +1,8 @@
-import { BounceLoader } from "react-spinners";
+import { useQuery } from "@tanstack/react-query";
+import PagePreloader from "../components/PagePreloader";
 import Table from "../components/Table";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { WalletTransaction } from "../models/Wallet";
-import { useQuery } from "@tanstack/react-query";
-import PagePreloader from "../components/PagePreloader";
 
 const Wallet = () => {
 	const { walletService } = useInjectedServices();

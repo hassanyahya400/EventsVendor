@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import Button from "./Button";
 
 interface Props {
 	children: string;
