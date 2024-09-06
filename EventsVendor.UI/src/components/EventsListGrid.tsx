@@ -4,14 +4,12 @@ import EventCard from "./EventCard";
 import { useQuery } from "@tanstack/react-query";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { Event } from "../models/Event";
+import PagePreloader from "./PagePreloader";
 
 interface Props {
 	limit?: number;
 }
 const EventsListGrid = ({ limit }: Props) => {
-	// let eventsToRender = [...events];
-	// if (limit) eventsToRender = [...events].slice(limit);
-
 	const { eventService } = useInjectedServices();
 	const {
 		data: events,
@@ -26,7 +24,7 @@ const EventsListGrid = ({ limit }: Props) => {
 		staleTime: 60 * 60 * 24,
 	});
 
-	if (isLoading) return <div>Loading...</div>;
+	if (isLoading) return <PagePreloader />;
 
 	if (error) return <div>Error: {error.message}</div>;
 

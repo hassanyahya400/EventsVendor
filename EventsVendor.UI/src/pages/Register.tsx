@@ -1,17 +1,17 @@
+import { yupResolver } from "@hookform/resolvers/yup";
+import { jwtDecode } from "jwt-decode";
+import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import BrandLogo from "../components/BrandLogo";
 import Button from "../components/Button";
 import CustomInput from "../components/CustomInput";
-import { registerSchema } from "./_inputValidations";
-import { UserRegisterRequest } from "../models/User";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { useInjectedServices } from "../contexts/serviceDependency";
-import { jwtDecode } from "jwt-decode";
+import { UserRegisterRequest } from "../models/User";
 import { useUserStore } from "../state-management/userStore";
+import { registerSchema } from "./_inputValidations";
 
 const Register = () => {
-	const { user, setUser } = useUserStore();
+	const { setUser } = useUserStore();
 	const { userService } = useInjectedServices();
 	const navigate = useNavigate();
 
@@ -68,20 +68,6 @@ const Register = () => {
 						placeholder="password"
 						register={register}
 					/>
-					<div className="flex items-center justify-between text-sm">
-						<div className="flex items-center gap-x-3">
-							<input
-								type="checkbox"
-								id="remember-me-checkbox"
-								className="checkbox-item peer hidden"
-							/>
-							<label
-								htmlFor="remember-me-checkbox"
-								className="relative flex w-5 h-5 bg-white peer-checked:bg-indigo-600 rounded-md border ring-offset-2 ring-indigo-600 duration-150 peer-active:ring cursor-pointer after:absolute after:inset-x-0 after:top-[3px] after:m-auto after:w-1.5 after:h-2.5 after:border-r-2 after:border-b-2 after:border-white after:rotate-45"
-							></label>
-							<span>Remember me</span>
-						</div>
-					</div>
 					<Button text="Sign in" type="submit" isLoading={isSubmitting} />
 				</form>
 				<p className="text-center">

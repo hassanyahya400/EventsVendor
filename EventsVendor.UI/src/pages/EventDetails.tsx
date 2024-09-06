@@ -3,10 +3,11 @@ import { IoLocationOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
 import { TbClock } from "react-icons/tb";
 import { useLocation, useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import PagePreloader from "../components/PagePreloader";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { extractIdFromPath } from "../helpers/urlHelpers";
-import { BounceLoader } from "react-spinners";
-import Button from "../components/Button";
+import ExpandableText from "../components/ExpandableText";
 
 const EventDetails = () => {
 	const location = useLocation();
@@ -42,12 +43,12 @@ const EventDetails = () => {
 		},
 	});
 
-	if (isLoading) return <BounceLoader loading={true} size={25} />;
+	if (isLoading) return <PagePreloader />;
 
 	if (error) return <div>Error: {error.message}</div>;
 
 	if (!event) {
-		return <div>No events found</div>;
+		return <div>Event not found</div>;
 	}
 	return (
 		<div className="my-4">
@@ -58,29 +59,28 @@ const EventDetails = () => {
 						<h3 className="text-lg text-gray-800 duration-150 group-hover:text-indigo-600 font-semibold pb-3">
 							{event.name}
 						</h3>
-						<p>{event.description}</p>
+						<ExpandableText>{event.description}</ExpandableText>
 					</div>
-					<div>
-						<h3>Event Info</h3>
-						<div className="flex justify-start gap-2 text-sm text-gray-600 duration-150 group-hover:text-gray-800">
+					<div className=" flex flex-col gap-2">
+						<h3 className="font-medium text-xl my-2">Event Info</h3>
+						<div className="flex justify-start items-center gap-2 text-gray-600 duration-150 group-hover:text-gray-800">
 							<MdDateRange /> <span>{event.date}</span>
 						</div>
-						<div className="flex justify-start gap-2">
+						<div className="flex justify-start items-center gap-2">
 							<TbClock />
-							<span className="text-gray-600 text-sm duration-150 group-hover:text-gray-800">
+							<span className="text-gray-600 duration-150 group-hover:text-gray-800">
 								{event.date}
 							</span>
 						</div>
-						<div className="flex justify-start gap-2">
+						<div className="flex justify-start items-center gap-2">
 							<IoLocationOutline />
-							<span className="text-gray-600 text-sm duration-150 group-hover:text-gray-800">
+							<span className="text-gray-600 duration-150 group-hover:text-gray-800">
 								{event.location}
 							</span>
 						</div>
 					</div>
 				</div>
 				<div className="flex flex-col gap-2 max-w-md items-start">
-					{/* <div>Share event</div> */}
 					<p className="font-medium">
 						Price: <span className="text-3xl">₦ {event.price}</span>
 					</p>

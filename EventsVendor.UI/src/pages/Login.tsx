@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { jwtDecode } from "jwt-decode";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import BrandLogo from "../components/BrandLogo";
 import Button from "../components/Button";
 import CustomInput from "../components/CustomInput";
 import { useInjectedServices } from "../contexts/serviceDependency";
-import { UserLoginRequest } from "../models/User";
-import { loginSchema } from "./_inputValidations";
-import { useUserStore } from "../state-management/userStore";
-import { jwtDecode } from "jwt-decode";
 import useAuthRedirect from "../hooks/useAuthRedirect";
+import { UserLoginRequest } from "../models/User";
+import { useUserStore } from "../state-management/userStore";
+import { loginSchema } from "./_inputValidations";
 
 const Login = () => {
 	const { userService } = useInjectedServices();

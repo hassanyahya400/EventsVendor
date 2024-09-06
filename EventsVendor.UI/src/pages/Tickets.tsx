@@ -4,6 +4,7 @@ import { useInjectedServices } from "../contexts/serviceDependency";
 import { Ticket } from "../models/Ticket";
 import { BounceLoader } from "react-spinners";
 import { FC } from "react";
+import PagePreloader from "../components/PagePreloader";
 
 // import tickets from "../data/tickets";
 
@@ -25,9 +26,9 @@ const Tickets = () => {
 		staleTime: 60 * 60,
 	});
 
-	if (isLoading) return <BounceLoader loading={true} size={25} />;
+	if (isLoading) return <PagePreloader />;
 
-	if (error) return <div>An error occured</div>;
+	if (error) return <div>Error: {error.message}</div>;
 
 	if (!tickets || tickets.length === 0) {
 		return <div>No ticket found</div>;

@@ -3,6 +3,7 @@ import Table from "../components/Table";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { WalletTransaction } from "../models/Wallet";
 import { useQuery } from "@tanstack/react-query";
+import PagePreloader from "../components/PagePreloader";
 
 const Wallet = () => {
 	const { walletService } = useInjectedServices();
@@ -27,9 +28,9 @@ const Wallet = () => {
 		staleTime: 60 * 60,
 	});
 
-	if (isLoading) return <BounceLoader loading={true} size={25} />;
+	if (isLoading) return <PagePreloader />;
 
-	if (error) return <div>An error occured</div>;
+	if (error) return <div>An error occured, {error.message}</div>;
 
 	if (!walletTransactions || walletTransactions.length === 0) {
 		return <div>No ticket found</div>;
