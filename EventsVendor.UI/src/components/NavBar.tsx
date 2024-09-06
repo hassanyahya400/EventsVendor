@@ -6,7 +6,14 @@ import { useUserStore } from "../state-management/userStore";
 
 const NavBar = () => {
 	const [state, setState] = useState(true);
-	const { user } = useUserStore();
+	const { user, setUser } = useUserStore();
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+		setUser(null);
+		alert("Click ok to continue");
+		navigate("/");
+	};
 
 	return (
 		<nav className="relative items-between pt-5 md:flex md:space-x-6">
@@ -60,7 +67,7 @@ const NavBar = () => {
 						</li>
 					))}
 				</div>
-				{!user && (
+				{!user ? (
 					<li className="order-2 py-5 md:py-0">
 						<Link
 							to="/login"
@@ -68,6 +75,10 @@ const NavBar = () => {
 						>
 							Login
 						</Link>
+					</li>
+				) : (
+					<li className="order-2 py-5 md:py-0 cursor-pointer" onClick={handleLogout}>
+						Logout
 					</li>
 				)}
 			</ul>
