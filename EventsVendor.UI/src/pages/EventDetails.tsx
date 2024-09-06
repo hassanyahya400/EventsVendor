@@ -37,7 +37,6 @@ const EventDetails = () => {
 			console.log("Ticket booked successfully", data);
 		},
 		onError: (error) => {
-			// Handle errors, e.g., show an error message
 			alert(`Error booking ticket ${error.message}`);
 			console.error("Error booking ticket", error);
 		},

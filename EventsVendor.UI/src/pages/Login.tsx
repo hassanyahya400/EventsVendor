@@ -41,7 +41,7 @@ const Login = () => {
 			alert("Login successful, click OK to proceed");
 			return;
 		} else {
-			alert("An error occured while logging in, please try again");
+			alert(`An error occured while logging in, please try again`);
 			console.log("An error occured while logging in");
 		}
 	};

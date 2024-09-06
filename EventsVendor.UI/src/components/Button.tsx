@@ -10,7 +10,7 @@ const Button = ({ text, type, isLoading, ...rest }: Props) => {
 		<button
 			type={type}
 			{...rest}
-			className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 text-center"
+			className="w-full px-auto py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150 text-center"
 		>
 			{isLoading ? <BounceLoader loading={true} size={25} /> : text}
 		</button>

@@ -23,7 +23,7 @@ const EventCard = ({
   price,
 }: Props) => {
   return (
-    <div className="w-full group sm:max-w-sm border border-gray-300 rounded-lg overflow-hidden">
+    <div className="w-full h-full flex flex-col justify-between group sm:max-w-sm border border-gray-300 rounded-lg overflow-hidden">
       <img src={imageUrl} loading="lazy" alt={name} className="w-full" />
       <div className="mt-3 space-y-2 px-3 py-2">
         <h3 className="text-lg text-gray-800 duration-150 group-hover:text-indigo-600 font-semibold pb-3">

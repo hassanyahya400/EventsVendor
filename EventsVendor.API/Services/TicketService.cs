@@ -30,8 +30,9 @@ namespace EventsVendor.Services
             var ticket = await _context.Tickets
                 .Include(t => t.Event)
                 .Include(t => t.User)
+                .OrderByDescending(t => t.BookingDate)
                 .FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
-                
+
             return ticket;
         }
 

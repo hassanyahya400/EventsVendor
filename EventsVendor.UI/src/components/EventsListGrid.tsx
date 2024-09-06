@@ -36,7 +36,7 @@ const EventsListGrid = ({ limit }: Props) => {
 			<h3 className="text-3xl text-gray-500 font-extrabold md:text-4xl py-5">
 				Popular Events In Your Location
 			</h3>
-			<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 content-between my-3">
+			<div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 content-between place-items-stretch my-3">
 				{events.map((event: Event) => (
 					<Link key={event.id} to={`/events/${event.id}`}>
 						<EventCard

@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { FC } from "react";
 import { useInjectedServices } from "../contexts/serviceDependency";
+import { ClipLoader } from "react-spinners";
 
 interface Props<T> {
 	columns: (keyof T)[];
@@ -21,13 +22,14 @@ interface RowAction {
 const Table = <T,>({ columns, data, variant, rowAction }: Props<T>) => {
 	const { ticketService } = useInjectedServices();
 
-	const { mutate: cancelTicket } = useMutation({
+	const { mutate: cancelTicket, isPending } = useMutation({
 		mutationFn: async (id: number) => await ticketService.cancelTicket(id),
 		onSuccess: (data) => {
 			alert("Ticket cancelled successfully");
 			console.log("Ticket cancelled successfully", data);
 		},
 		onError: (error) => {
+			alert(`Error canceling ticket, ${error.message}`);
 			console.error("Error canceling ticket", error);
 		},
 	});
@@ -66,13 +68,12 @@ const Table = <T,>({ columns, data, variant, rowAction }: Props<T>) => {
 										onClick={() => cancelTicket(Number(row[columns[0]]))}
 										className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
 									>
-										Cancel
+										{isPending ? <ClipLoader loading={isPending} size={15} /> : "Cancel"}
 									</button>
 								</td>
 							) : (
 								""
 							)}
-
 						</tr>
 					))}
 				</tbody>

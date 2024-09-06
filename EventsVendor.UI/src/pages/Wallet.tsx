@@ -3,11 +3,16 @@ import PagePreloader from "../components/PagePreloader";
 import Table from "../components/Table";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { WalletTransaction } from "../models/Wallet";
+import { ClipLoader } from "react-spinners";
 
 const Wallet = () => {
 	const { walletService } = useInjectedServices();
 
-	const { data: walletBalance } = useQuery<number, Error>({
+	const {
+		data: walletBalance,
+		isLoading: isBalanceLoading,
+		error: balanceError,
+	} = useQuery<number, Error>({
 		queryKey: ["balance"],
 		queryFn: async () => {
 			return await walletService.getBalance();
@@ -17,8 +22,8 @@ const Wallet = () => {
 
 	const {
 		data: walletTransactions,
-		isLoading,
-		error,
+		isLoading: isTransactionsLoading,
+		error: walletTransactionError,
 	} = useQuery<WalletTransaction[], Error>({
 		queryKey: ["walletTransactions"],
 		queryFn: async () => {
@@ -26,22 +31,31 @@ const Wallet = () => {
 		},
 		staleTime: 60 * 60,
 	});
-
-	if (isLoading) return <PagePreloader />;
-
-	if (error) return <div>An error occured, {error.message}</div>;
-
-	if (!walletTransactions || walletTransactions.length === 0) {
-		return <div>No ticket found</div>;
-	}
 	return (
 		<div>
 			<div className="items-start justify-between md:flex">
-				<div className="max-w-lg mt-2">
-					<h3 className="text-gray-800 text-3xl font-bold ">₦ {walletBalance}</h3>
+				<div className="max-w-lg mt-2 flex items-baseline">
+					₦
+					{isBalanceLoading ? (
+						<ClipLoader loading={isBalanceLoading} size={15} />
+					) : balanceError ? (
+						<div>An error occured, {balanceError.message}</div>
+					) : (
+						<h3 className="text-gray-800 text-3xl font-bold "> {walletBalance}</h3>
+					)}
 				</div>
 			</div>
-			<Table columns={["transactionDate", "amount", "type"]} data={walletTransactions} />
+			{isTransactionsLoading ? (
+				<PagePreloader />
+			) : !walletTransactions ? (
+				<div>No transaction found</div>
+			) : walletTransactions.length === 0 ? (
+				<div>No transaction found</div>
+			) : walletTransactionError ? (
+				<div>An error occured, {walletTransactionError.message}</div>
+			) : (
+				<Table columns={["transactionDate", "amount", "type"]} data={walletTransactions} />
+			)}
 		</div>
 	);
 };
