@@ -3,7 +3,7 @@
 ## Overview
 
 This repository contains the implementation of an Event Booking Management System, which includes a backend application built with C# (.NET Core) and a frontend application built with React.js and TypeScript. 
-I'm able to complete the API and the UI implementation, however due to time constraints, I have not completed the integration
+I'm able to complete the API and the UI implementation, however due to time constraints, I have not completed the integration fully.
 
 ## Project Structure
 
