@@ -15,6 +15,6 @@ export interface BookTicketResponse {
 }
 
 export enum ticketStatus {
-	Booked = 0,
-	Cancelled = 1,
+	Cancelled = 0,
+	Booked = 1,
 }

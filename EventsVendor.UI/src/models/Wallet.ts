@@ -5,6 +5,7 @@ export interface WalletTransaction {
 }
 
 export enum transactionType {
-	Credit = 0,
-	Debit = 1,
+	Debit = 0,
+	Fund = 1,
+	Credit = 2,
 }

@@ -10,15 +10,17 @@ interface Props<T> {
 const Table = <T,>({ columns, data, variant }: Props<T>) => {
 	const { ticketService } = useInjectedServices();
 
-	const cancelTicket = useMutation({
+	const { mutate: cancelTicket } = useMutation({
 		mutationFn: async (id: number) => await ticketService.cancelTicket(id),
 		onSuccess: (data) => {
-			console.log("Ticket booked successfully", data);
+			alert("Ticket cancelled successfully");
+			console.log("Ticket cancelled successfully", data);
 		},
 		onError: (error) => {
-			console.error("Error booking ticket", error);
+			console.error("Error canceling ticket", error);
 		},
 	});
+
 	return (
 		<div className="mt-8 shadow-sm border rounded-lg overflow-x-auto">
 			<table className="w-full table-auto text-sm text-left">
@@ -36,13 +38,21 @@ const Table = <T,>({ columns, data, variant }: Props<T>) => {
 						<tr key={idx}>
 							{columns.map((column) => (
 								<td key={String(column)} className="px-6 py-4 whitespace-nowrap">
-									{String(row[column])}
+									{row[column] == 0 ? (
+										<span className="text-red-400">{String(row[column])}</span>
+									) : row[column] == 1 ? (
+										<span className="text-green-400">{String(row[column])}</span>
+									) : row[column] == 2 ? (
+										<span className="text-green-400">{String(row[column])}</span>
+									) : (
+										String(row[column])
+									)}
 								</td>
 							))}
-							{variant == "ticket" ? (
+							{variant == "ticket" && row[columns[3]] ? (
 								<td className="text-right px-6 whitespace-nowrap">
 									<button
-										onClick={() => cancelTicket.mutate(Number(row[columns[0]]))}
+										onClick={() => cancelTicket(Number(row[columns[0]]))}
 										className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
 									>
 										Cancel
