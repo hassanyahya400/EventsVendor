@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { jwtDecode } from "jwt-decode";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import BrandLogo from "../components/BrandLogo";
@@ -7,11 +6,9 @@ import Button from "../components/Button";
 import CustomInput from "../components/CustomInput";
 import { useInjectedServices } from "../contexts/serviceDependency";
 import { UserRegisterRequest } from "../models/User";
-import { useUserStore } from "../state-management/userStore";
 import { registerSchema } from "./_inputValidations";
 
 const Register = () => {
-	const { setUser } = useUserStore();
 	const { userService } = useInjectedServices();
 	const navigate = useNavigate();
 
@@ -24,22 +21,16 @@ const Register = () => {
 	});
 
 	const onRegister = async (data: UserRegisterRequest) => {
-		const user = {
-			email: data.email,
-			id: "",
-			token: "",
-		};
-		const response = await userService.login(data);
-		if (response?.token) {
-			const decodedToken = (await jwtDecode(response.token)) as any;
-			user.id = decodedToken.nameidentifier;
-			user.token = response.token;
-			setUser(user);
-			navigate("/", { replace: true });
-			alert("Register successful, click OK to proceed");
-			return;
-		} else {
-			alert("An error occured while submitting, please try again");
+		try {
+			const response = await userService.register(data);
+			if (response) {
+				navigate("/login", { replace: true });
+				alert("Register successful, login to coninue");
+				return;
+			}
+			
+		} catch (error) {
+			alert(`An error occured while submitting, please try again ${error}`);
 			console.log("An error occured while submitting");
 		}
 	};
@@ -68,7 +59,7 @@ const Register = () => {
 						placeholder="password"
 						register={register}
 					/>
-					<Button text="Sign in" type="submit" isLoading={isSubmitting} />
+					<Button text="Register" type="submit" isLoading={isSubmitting} />
 				</form>
 				<p className="text-center">
 					<span className="mr-1"> Registered already? </span>

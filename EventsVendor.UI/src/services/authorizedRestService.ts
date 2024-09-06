@@ -1,7 +1,7 @@
 import { AxiosHeaders, AxiosRequestHeaders } from "axios";
-import { RestService } from "./restService";
 import { jwtDecode } from "jwt-decode";
 import { useUserStore } from "../state-management/userStore";
+import { RestService } from "./restService";
 
 export class AuthorizedRestService extends RestService {
 	constructor(url: string) {

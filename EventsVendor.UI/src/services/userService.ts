@@ -25,6 +25,7 @@ export class UserService implements IUserService {
 			}
 		} catch (error) {
 			console.error(`Unable to login: ${error}`);
+			throw error;
 		}
 		return null;
 	}
@@ -32,10 +33,12 @@ export class UserService implements IUserService {
 	async register(requestBody: UserRegisterRequest): Promise<void | null> {
 		try {
 			const url = "/auth/register";
+			requestBody.role = "USER";
 
 			return await this.restService.post<UserRegisterRequest, void>(url, requestBody);
 		} catch (error) {
 			console.error(`Unable to sign up: ${error}`);
+			throw error;
 		}
 	}
 
