@@ -14,10 +14,9 @@ export interface IInjectedServices {
 }
 
 export const createServices = (): IInjectedServices => {
-	// const API_BASE_URL = import.meta.env.API_BASE_URL;
-	const API_BASE_URL = "https://localhost:7022/api";
-	const webApiRestService = new RestService(API_BASE_URL);
-	const webApiAuthorizedRestService = new AuthorizedRestService(API_BASE_URL);
+	// const API_BASE_URL = "https://localhost:7022/api";
+	const webApiRestService = new RestService(import.meta.env.VITE_API_BASE_URL);
+	const webApiAuthorizedRestService = new AuthorizedRestService(import.meta.env.VITE_API_BASE_URL);
 
 	const userService = new UserService(webApiRestService);
 	const eventService = new EventService(webApiRestService, webApiAuthorizedRestService);
