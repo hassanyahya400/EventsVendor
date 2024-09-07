@@ -1,4 +1,4 @@
-import gdg from "../../public/gdg.svg";
+import gdg from "../assets/gdg.svg";
 
 const Hero = () => {
 	return (
